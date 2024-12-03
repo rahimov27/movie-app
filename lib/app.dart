@@ -3,13 +3,14 @@ import 'package:movie_app/shared/router/router.dart';
 import 'package:movie_app/shared/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerDelegate: AppRouter().delegate(),
-      routeInformationParser: AppRouter().defaultRouteParser(),
+      routerConfig: _appRouter.config(),
       theme: theme,
     );
   }

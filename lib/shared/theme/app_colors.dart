@@ -6,4 +6,6 @@ abstract class AppColors {
   static const Color white = Color(0xffFFFFFF);
   static const Color splashBlackColor = Color(0xff000000);
   static const Color buttonBlackColor = Color(0xff1D1C1C);
+
+  static const Color searchColor = Color(0xff1C1C1C);
 }
