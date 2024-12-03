@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/auth/presentation/sign_in_page.dart';
+import 'package:movie_app/shared/router/router.dart';
 import 'package:movie_app/shared/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,8 +7,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const SignInPage(),
+    return MaterialApp.router(
+      routerDelegate: AppRouter().delegate(),
+      routeInformationParser: AppRouter().defaultRouteParser(),
       theme: theme,
     );
   }
