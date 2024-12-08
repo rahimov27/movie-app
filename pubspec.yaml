@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.16
   auto_route: ^9.2.2
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

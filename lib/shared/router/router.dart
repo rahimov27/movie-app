@@ -8,8 +8,10 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: SignInRoute.page, initial: true),
-        AutoRoute(page: HomeRoute.page),
+        AutoRoute(
+          page: SignInRoute.page,
+        ),
+        AutoRoute(page: HomeRoute.page, initial: true),
       ];
 
   @override
