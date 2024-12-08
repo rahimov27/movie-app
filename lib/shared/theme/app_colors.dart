@@ -8,4 +8,8 @@ abstract class AppColors {
   static const Color buttonBlackColor = Color(0xff1D1C1C);
 
   static const Color searchColor = Color(0xff1C1C1C);
+
+  static const Color carouselCardSubTitle = Color(0xffBFBFBF);
+
+
 }
