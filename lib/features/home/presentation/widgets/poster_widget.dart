@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 class PosterWidget extends StatelessWidget {
-  final String? imageUrl;
+  final String imageUrl;
+  final String? title;
+  final String? year;
+  final String? type;
 
-  const PosterWidget({super.key, this.imageUrl});
+  const PosterWidget(
+      {super.key, required this.imageUrl, this.title, this.type, this.year});
 
   @override
   Widget build(BuildContext context) {
@@ -18,45 +21,35 @@ class PosterWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
-                width: 310,
-                height: 440,
-                fit: BoxFit.cover,
-                imageUrl ?? "",
-              ),
+                  width: 310,
+                  height: 440,
+                  fit: BoxFit.cover,
+                  imageUrl != "N/A"
+                      ? imageUrl
+                      : "https://via.placeholder.com/310x440"),
             ),
           ),
           const SizedBox(height: 16),
-          Column(
-            children: [
-              const Text(
-                "Avengers - Infinity War",
-                style: TextStyle(
-                    fontSize: 24,
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              const Text(
-                "2h29m • Action, adventure, sci-fi",
-                style: TextStyle(
-                    fontSize: 16, color: AppColors.carouselCardSubTitle),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset("assets/images/svg/star.svg"),
-                  const Text(
-                    "4.8",
-                    style: TextStyle(fontSize: 16, color: AppColors.textColor),
-                  ),
-                  const SizedBox(width: 2),
-                  const Text(
-                    "(1.222)",
-                    style: TextStyle(
-                        fontSize: 12, color: AppColors.carouselCardSubTitle),
-                  ),
-                ],
-              )
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title ?? "-",
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 24,
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Type:$type - year ($year)",
+                  style: const TextStyle(
+                      fontSize: 16, color: AppColors.carouselCardSubTitle),
+                ),
+              ],
+            ),
           )
         ],
       ),

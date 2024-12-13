@@ -37,6 +37,8 @@ dependencies:
   flutter_svg: ^2.0.16
   auto_route: ^9.2.2
   carousel_slider: ^5.0.0
+  dio: ^5.7.0
+  flutter_bloc: ^8.1.6
 
 dev_dependencies:
   flutter_test:
