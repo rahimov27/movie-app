@@ -7,17 +7,30 @@ import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_event.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/coming_soon_card_widget.dart';
+import 'package:movie_app/features/home/presentation/widgets/movie_news_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/poster_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/promo_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/search_text_field_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/see_all_button_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/service_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/title_widget.dart';
+import 'package:movie_app/shared/app_consts.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(GetPopularMovieEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +47,7 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is SearchMoviesLoading) {
-            // Центрируем индикатор загрузки
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.yellow,
-              ),
-            );
+            return const AppCircularWidget();
           } else if (state is SearchMoviesSuccess) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -78,58 +86,73 @@ class HomePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     const SeeAllButtonWidget(
-                      leftText: "Coming soon",
+                      leftText: "Popular",
                       buttonText: "See all",
                     ),
                     const SizedBox(height: 24),
-                    const SingleChildScrollView(
+                    SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
-                            movieTitle: "Inception",
-                            movieType: "Action, Sci-fi, Thriller",
-                            movieDate: "16.07.2010",
-                          ),
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://pbs.twimg.com/media/Fa0kj5tVUAAzuVl?format=jpg&name=4096x4096",
-                            movieTitle: "Avatar 2: The Way Of Water",
-                            movieType: "Adventure, Sci-fi",
-                            movieDate: "22.03.2003",
-                          ),
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg",
-                            movieTitle: "The Dark Knight",
-                            movieType: "Action, Crime, Drama",
-                            movieDate: "18.07.2008",
-                          ),
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-                            movieTitle: "Interstellar",
-                            movieType: "Adventure, Drama, Sci-fi",
-                            movieDate: "07.11.2014",
-                          ),
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://m.media-amazon.com/images/I/81EBp0vOZZL.jpg",
-                            movieTitle:
-                                "The Lord of the Rings: The Fellowship of the Ring",
-                            movieType: "Adventure, Drama",
-                            movieDate: "19.12.2001",
-                          ),
-                          ComingSoonCardWidget(
-                            movieImage:
-                                "https://w0.peakpx.com/wallpaper/144/660/HD-wallpaper-official-spider-man-no-way-home-poster.jpg",
-                            movieTitle: "Spider-Man: No Way Home",
-                            movieType: "Action, Adventure, Sci-fi",
-                            movieDate: "17.12.2021",
-                          ),
-                        ],
+                      child: BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          if (state is PopularMovieLoading) {
+                            return const AppCircularWidget();
+                          } else if (state is PopularMovieSuccess) {
+                            final popularMovies = state.popularMovies;
+                            return ListView.builder(
+                              itemBuilder: (context, index) =>
+                                  PopularMovieCardWidget(
+                                movieTitle: popularMovies[index].title,
+                              ),
+                            );
+                          }
+                          return const Row(
+                            children: [
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
+                                movieTitle: "Inception",
+                                movieType: "Action, Sci-fi, Thriller",
+                                movieDate: "16.07.2010",
+                              ),
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://pbs.twimg.com/media/Fa0kj5tVUAAzuVl?format=jpg&name=4096x4096",
+                                movieTitle: "Avatar 2: The Way Of Water",
+                                movieType: "Adventure, Sci-fi",
+                                movieDate: "22.03.2003",
+                              ),
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg",
+                                movieTitle: "The Dark Knight",
+                                movieType: "Action, Crime, Drama",
+                                movieDate: "18.07.2008",
+                              ),
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                                movieTitle: "Interstellar",
+                                movieType: "Adventure, Drama, Sci-fi",
+                                movieDate: "07.11.2014",
+                              ),
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://m.media-amazon.com/images/I/81EBp0vOZZL.jpg",
+                                movieTitle:
+                                    "The Lord of the Rings: The Fellowship of the Ring",
+                                movieType: "Adventure, Drama",
+                                movieDate: "19.12.2001",
+                              ),
+                              PopularMovieCardWidget(
+                                movieImage:
+                                    "https://w0.peakpx.com/wallpaper/144/660/HD-wallpaper-official-spider-man-no-way-home-poster.jpg",
+                                movieTitle: "Spider-Man: No Way Home",
+                                movieType: "Action, Adventure, Sci-fi",
+                                movieDate: "17.12.2021",
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -216,56 +239,39 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   const SeeAllButtonWidget(
-                    leftText: "Coming soon",
+                    leftText: "Popular",
                     buttonText: "See all",
                   ),
                   const SizedBox(height: 24),
-                  const SingleChildScrollView(
+                  SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_.jpg",
-                          movieTitle: "Inception",
-                          movieType: "Action, Sci-fi, Thriller",
-                          movieDate: "16.07.2010",
-                        ),
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://pbs.twimg.com/media/Fa0kj5tVUAAzuVl?format=jpg&name=4096x4096",
-                          movieTitle: "Avatar 2: The Way Of Water",
-                          movieType: "Adventure, Sci-fi",
-                          movieDate: "22.03.2003",
-                        ),
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg",
-                          movieTitle: "The Dark Knight",
-                          movieType: "Action, Crime, Drama",
-                          movieDate: "18.07.2008",
-                        ),
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-                          movieTitle: "Interstellar",
-                          movieType: "Adventure, Drama, Sci-fi",
-                          movieDate: "07.11.2014",
-                        ),
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://m.media-amazon.com/images/I/81EBp0vOZZL.jpg",
-                          movieTitle:
-                              "The Lord of the Rings: The Fellowship of the Ring",
-                          movieType: "Adventure, Drama",
-                          movieDate: "19.12.2001",
-                        ),
-                        ComingSoonCardWidget(
-                          movieImage:
-                              "https://w0.peakpx.com/wallpaper/144/660/HD-wallpaper-official-spider-man-no-way-home-poster.jpg",
-                          movieTitle: "Spider-Man: No Way Home",
-                          movieType: "Action, Adventure, Sci-fi",
-                          movieDate: "17.12.2021",
+                        BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            if (state is PopularMovieLoading) {
+                              return const AppCircularWidget();
+                            } else if (state is PopularMovieSuccess) {
+                              final popularMovies = state.popularMovies;
+                              return SizedBox(
+                                height: 330,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: popularMovies.length,
+                                  itemBuilder: (context, index) =>
+                                      PopularMovieCardWidget(
+                                    movieTitle: popularMovies[index].title,
+                                    movieDate: popularMovies[index].releaseDate,
+                                    movieType: popularMovies[index].overview,
+                                    movieImage:
+                                        "${AppConsts.tmdbImagePath}${popularMovies[index].backDropPath}",
+                                  ),
+                                ),
+                              );
+                            }
+                            return const SizedBox();
+                          },
                         ),
                       ],
                     ),
@@ -381,46 +387,16 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MovieNewsWidget extends StatelessWidget {
-  final String? imageUrl;
-  final String? newsText;
-
-  const MovieNewsWidget({
+class AppCircularWidget extends StatelessWidget {
+  const AppCircularWidget({
     super.key,
-    this.imageUrl,
-    this.newsText,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.network(
-              imageUrl ?? "-",
-              height: 155,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 75,
-            width: 290,
-            child: Text(
-              newsText ?? "-",
-              overflow: TextOverflow.fade,
-              style: const TextStyle(
-                  color: AppColors.textColor,
-                  fontSize: 16,
-                  height: 1.25,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-        ],
+    return const Center(
+      child: CircularProgressIndicator(
+        color: AppColors.yellow,
       ),
     );
   }
