@@ -254,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                             } else if (state is PopularMovieSuccess) {
                               final popularMovies = state.popularMovies;
                               return SizedBox(
-                                height: 350,
+                                height: 330,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
