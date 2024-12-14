@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,8 @@ import 'package:movie_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_event.dart';
 import 'package:movie_app/features/home/presentation/bloc/home_state.dart';
 import 'package:movie_app/features/home/presentation/widgets/poster_widget.dart';
+import 'package:movie_app/features/home/presentation/widgets/search_text_field_widget.dart';
+import 'package:movie_app/features/home/presentation/widgets/see_all_button_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/title_widget.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
@@ -26,19 +29,20 @@ class HomePage extends StatelessWidget {
         centerTitle: false,
         title: const TitleWidget(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is SearchMoviesLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                      backgroundColor: AppColors.yellow),
-                );
-              } else if (state is SearchMoviesSuccess) {
-                return Column(
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is SearchMoviesLoading) {
+            // Центрируем индикатор загрузки
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.yellow,
+              ),
+            );
+          } else if (state is SearchMoviesSuccess) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SingleChildScrollView(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 24),
@@ -67,11 +71,23 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ],
-                );
-              } else if (state is SearchMoviesError) {
-                return Text(state.error);
-              }
-              return Column(
+                ),
+              ),
+            );
+          } else if (state is SearchMoviesError) {
+            return Center(
+              child: Text(
+                state.error,
+                style: const TextStyle(color: AppColors.white),
+              ),
+            );
+          }
+
+          // Состояние по умолчанию
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SingleChildScrollView(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(height: 24),
@@ -109,91 +125,10 @@ class HomePage extends StatelessWidget {
                     ),
                   )
                 ],
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SeeAllButtonWidget extends StatelessWidget {
-  const SeeAllButtonWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          "Now playing",
-          style: TextStyle(
-              color: AppColors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold),
-        ),
-        GestureDetector(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                "See all",
-                style: TextStyle(
-                    color: AppColors.yellow,
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 2.5, left: 4),
-                child: SvgPicture.asset("assets/images/svg/arrow-right.svg"),
-              )
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SearchTextFieldWidget extends StatelessWidget {
-  final VoidCallback? onTap;
-  final TextEditingController? controller;
-  const SearchTextFieldWidget({super.key, this.controller, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onEditingComplete: onTap,
-      controller: controller,
-      cursorColor: AppColors.yellow,
-      style: const TextStyle(color: AppColors.white),
-      decoration: InputDecoration(
-        prefixIconConstraints: const BoxConstraints(
-          maxWidth: 44,
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12),
-          child: SvgPicture.asset(
-            "assets/images/svg/search.svg",
-          ),
-        ),
-        filled: true,
-        fillColor: AppColors.searchColor,
-        hintText: "Search",
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.yellow),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
