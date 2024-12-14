@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/features/home/presentation/widgets/subtitle_coming_soon_widget.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
-class ComingSoonCardWidget extends StatelessWidget {
+class PopularMovieCardWidget extends StatelessWidget {
   final String? movieTitle;
   final String? movieType;
   final String? movieDate;
   final String? movieImage;
 
-  const ComingSoonCardWidget(
+  const PopularMovieCardWidget(
       {super.key,
       this.movieDate,
       this.movieTitle,
@@ -48,7 +48,7 @@ class ComingSoonCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SubtitleComingSoonWidget(
-              text: movieType,
+              text: "${movieType?.substring(0, 22)}...",
               imageUrl: "assets/images/svg/video.svg",
             ),
             const SizedBox(height: 4),

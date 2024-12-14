@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:movie_app/features/home/data/models/popular_movies_model.dart';
 import 'package:movie_app/features/home/data/models/search_home_model.dart';
 import 'package:movie_app/shared/app_consts.dart';
 
 abstract class HomeRemoteDataSources {
   Future<List<SearchHomeModel>> findMovie(String title);
+  Future<List<PopularMoviesModel>> popularMovies();
 }
 
 class HomeRemoteDataSourcesImpl implements HomeRemoteDataSources {
@@ -25,6 +27,26 @@ class HomeRemoteDataSourcesImpl implements HomeRemoteDataSources {
       }
     } catch (e) {
       throw Exception("Failed to fetch movies: $e");
+    }
+  }
+
+  @override
+  Future<List<PopularMoviesModel>> popularMovies() async {
+    try {
+      final response = await dio.get(
+          "https://api.themoviedb.org/3/movie/popular?api_key=${AppConsts.tmdbApi}",
+          options: Options(
+              headers: {"Authorization": "Bearer ${AppConsts.tmdbAccessApi}"}));
+      if (response.statusCode == 200) {
+        final List popularMovies = response.data['results'];
+        return popularMovies
+            .map((popualar) => PopularMoviesModel.fromJson(popualar))
+            .toList();
+      } else {
+        throw Exception("Failed to catch popular movies");
+      }
+    } catch (e) {
+      throw Exception("$e");
     }
   }
 }

@@ -16,7 +16,7 @@ class SubtitleComingSoonWidget extends StatelessWidget {
         Text(
           text ?? "-",
           textAlign: TextAlign.left,
-          overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.clip,
           style: const TextStyle(
             fontSize: 12,
             color: AppColors.textColor,
