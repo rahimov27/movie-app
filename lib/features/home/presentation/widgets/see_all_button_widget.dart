@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 class SeeAllButtonWidget extends StatelessWidget {
-  const SeeAllButtonWidget({
-    super.key,
-  });
+  final String? leftText;
+  final String? buttonText;
+  const SeeAllButtonWidget({super.key, this.buttonText, this.leftText});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,9 @@ class SeeAllButtonWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "Now playing",
-          style: TextStyle(
+        Text(
+          leftText ?? "-",
+          style: const TextStyle(
               color: AppColors.white,
               fontSize: 24,
               fontWeight: FontWeight.bold),
@@ -24,9 +24,9 @@ class SeeAllButtonWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "See all",
-                style: TextStyle(
+              Text(
+                buttonText ?? "-",
+                style: const TextStyle(
                     color: AppColors.yellow,
                     fontSize: 14,
                     fontWeight: FontWeight.normal),
