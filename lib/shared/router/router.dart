@@ -4,14 +4,20 @@ import 'package:movie_app/shared/router/router.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
   @override
-  RouteType get defaultRouteType => RouteType.material();
+  RouteType get defaultRouteType => const RouteType.material();
 
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: SignInRoute.page,
-        ),
-        AutoRoute(page: HomeRoute.page, initial: true),
+          page: MainRoute.page,
+          initial: true,
+          children: [
+            AutoRoute(page: HomeRoute.page, initial: true),
+            AutoRoute(page: TicketRoute.page),
+            AutoRoute(page: MovieRoute.page),
+            AutoRoute(page: ProfileRoute.page)
+          ],
+        )
       ];
 
   @override
