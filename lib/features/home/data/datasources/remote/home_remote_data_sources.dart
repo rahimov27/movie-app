@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/features/home/data/models/popular_movies_model.dart';
 import 'package:movie_app/features/home/data/models/search_home_model.dart';
-import 'package:movie_app/shared/app_consts.dart';
+import 'package:movie_app/shared/resources/app_consts.dart';
 
 abstract class HomeRemoteDataSources {
   Future<List<SearchHomeModel>> findMovie(String title);

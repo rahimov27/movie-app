@@ -9,13 +9,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:movie_app/features/auth/presentation/sign_in_page.dart' as _i5;
+import 'package:movie_app/features/auth/presentation/sign_in_page.dart' as _i4;
 import 'package:movie_app/features/home/presentation/pages/home_page.dart'
     as _i1;
-import 'package:movie_app/features/movie_screen.dart' as _i3;
+import 'package:movie_app/features/movie/presentation/pages/movie_screen.dart'
+    as _i3;
+import 'package:movie_app/features/ticket/presentation/pages/ticket_page.dart'
+    as _i5;
+import 'package:movie_app/features/user/presentation/pages/user_page.dart'
+    as _i6;
 import 'package:movie_app/main_screen.dart' as _i2;
-import 'package:movie_app/profile_page.dart' as _i4;
-import 'package:movie_app/ticket_page.dart' as _i6;
 
 /// generated route for
 /// [_i1.HomePage]
@@ -75,26 +78,7 @@ class MovieRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.ProfilePage]
-class ProfileRoute extends _i7.PageRouteInfo<void> {
-  const ProfileRoute({List<_i7.PageRouteInfo>? children})
-      : super(
-          ProfileRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileRoute';
-
-  static _i7.PageInfo page = _i7.PageInfo(
-    name,
-    builder: (data) {
-      return const _i4.ProfilePage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i5.SignInPage]
+/// [_i4.SignInPage]
 class SignInRoute extends _i7.PageRouteInfo<void> {
   const SignInRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -107,13 +91,13 @@ class SignInRoute extends _i7.PageRouteInfo<void> {
   static _i7.PageInfo page = _i7.PageInfo(
     name,
     builder: (data) {
-      return const _i5.SignInPage();
+      return const _i4.SignInPage();
     },
   );
 }
 
 /// generated route for
-/// [_i6.TicketPage]
+/// [_i5.TicketPage]
 class TicketRoute extends _i7.PageRouteInfo<void> {
   const TicketRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -126,7 +110,26 @@ class TicketRoute extends _i7.PageRouteInfo<void> {
   static _i7.PageInfo page = _i7.PageInfo(
     name,
     builder: (data) {
-      return const _i6.TicketPage();
+      return const _i5.TicketPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i6.UserPage]
+class UserRoute extends _i7.PageRouteInfo<void> {
+  const UserRoute({List<_i7.PageRouteInfo>? children})
+      : super(
+          UserRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UserRoute';
+
+  static _i7.PageInfo page = _i7.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.UserPage();
     },
   );
 }

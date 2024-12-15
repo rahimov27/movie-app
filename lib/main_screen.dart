@@ -12,12 +12,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AutoTabsRouter(
-        routes: const [
-          HomeRoute(),
-          TicketRoute(),
-          MovieRoute(),
-          ProfileRoute(),
-        ],
+        routes: const [HomeRoute(), TicketRoute(), MovieRoute(), UserRoute()],
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
           return Scaffold(
