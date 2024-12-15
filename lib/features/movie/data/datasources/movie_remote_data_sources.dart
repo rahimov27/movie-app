@@ -4,6 +4,7 @@ import 'package:movie_app/shared/resources/app_consts.dart';
 
 abstract class MovieRemoteDataSources {
   Future<List<MovieModel>> getComingSoon();
+  Future<List<MovieModel>> nowPlaying();
 }
 
 class MovieRemoteDataSourcesImpl implements MovieRemoteDataSources {
@@ -21,6 +22,23 @@ class MovieRemoteDataSourcesImpl implements MovieRemoteDataSources {
         return soonMovies.map((movie) => MovieModel.fromJson(movie)).toList();
       } else {
         throw Exception(response.data['Error'] ?? 'Failed to fetch movies');
+      }
+    } catch (e) {
+      throw Exception("$e");
+    }
+  }
+
+  @override
+  Future<List<MovieModel>> nowPlaying() async {
+    try {
+      final response = await dio.get(
+          "https://api.themoviedb.org/3/movie/now_playing?api_key=${AppConsts.tmdbApi}");
+      if (response.statusCode == 200) {
+        final List nowPlaying = response.data['results'];
+        return nowPlaying.map((movie) => MovieModel.fromJson(movie)).toList();
+      } else {
+        throw Exception(
+            response.data['Error'] ?? 'Failed to fetch now playing movies');
       }
     } catch (e) {
       throw Exception("$e");

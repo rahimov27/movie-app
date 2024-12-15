@@ -15,4 +15,14 @@ class MovieRepositoryImpl implements MovieRepository {
       throw Exception("Error in movie repo impl $e");
     }
   }
+
+  @override
+  Future<List<MovieModel>> nowPlaying() async {
+    try {
+      final result = await remoteDataSources.nowPlaying();
+      return result;
+    } catch (e) {
+      throw Exception("Error in movie repo impl $e");
+    }
+  }
 }

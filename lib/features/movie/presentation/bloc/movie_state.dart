@@ -15,3 +15,17 @@ class GetComingSoonSuccess extends MovieState {
   final List<MovieModel> movieModel;
   GetComingSoonSuccess({required this.movieModel});
 }
+
+
+
+class GetNowPlayingLoading extends MovieState {}
+
+class GetNowPlayingError extends MovieState {
+  final String error;
+  GetNowPlayingError({required this.error});
+}
+
+class GetNowPlayingSuccess extends MovieState {
+  final List<MovieModel> movieModel;
+  GetNowPlayingSuccess({required this.movieModel});
+}

@@ -17,12 +17,12 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  int _initialValue = 1;
+  int _initialValue = 0;
 
   @override
   void initState() {
     super.initState();
-    context.read<MovieBloc>().add(GetComingSoonEvent());
+    context.read<MovieBloc>().add(GetNowPlayingEvent());
   }
 
   @override
@@ -50,6 +50,9 @@ class _MovieScreenState extends State<MovieScreen> {
               onValueChanged: (value) {
                 setState(() {
                   _initialValue = value;
+                  _initialValue == 0
+                      ? context.read<MovieBloc>().add(GetNowPlayingEvent())
+                      : context.read<MovieBloc>().add(GetComingSoonEvent());
                 });
               },
               children: {
@@ -73,24 +76,53 @@ class _MovieScreenState extends State<MovieScreen> {
             ),
             Expanded(
               child: _initialValue == 0
-                  ? GridView.builder(
-                      itemCount: 6,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 24,
-                        childAspectRatio: 0.43,
-                      ),
-                      itemBuilder: (context, index) =>
-                          const MovieNowPlayingCardWidget(
-                        movieImage:
-                            "https://m.media-amazon.com/images/I/91LPOMer4jL._AC_UF894,1000_QL80_.jpg",
-                        movieTitle: "Venom",
-                        movieDate: "22.01.2019",
-                        movieVote: "345",
-                      ),
+                  ? BlocBuilder<MovieBloc, MovieState>(
+                      builder: (context, state) {
+                        if (state is GetNowPlayingLoading) {
+                          return const AppCircularWidget();
+                        } else if (state is GetNowPlayingSuccess) {
+                          return GridView.builder(
+                            itemCount: state.movieModel.length,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 24,
+                              childAspectRatio: 0.43,
+                            ),
+                            itemBuilder: (context, index) =>
+                                MovieNowPlayingCardWidget(
+                              movieImage:
+                                  "${AppConsts.tmdbImagePath}${state.movieModel[index].backDropPath}",
+                              movieTitle: state.movieModel[index].title,
+                              movieDate: state.movieModel[index].releaseDate,
+                              movieType:
+                                  state.movieModel[index].originalLanguage,
+                              movieVote: state.movieModel[index].voteCount,
+                            ),
+                          );
+                        }
+                        return GridView.builder(
+                          itemCount: 6,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 24,
+                            childAspectRatio: 0.43,
+                          ),
+                          itemBuilder: (context, index) =>
+                              const MovieNowPlayingCardWidget(
+                            movieImage:
+                                "https://m.media-amazon.com/images/I/81Fd1jD8DAL._AC_UF894,1000_QL80_.jpg",
+                            movieTitle: "Spider man",
+                            movieDate: "22.01.2019",
+                            movieVote: "345",
+                          ),
+                        );
+                      },
                     )
                   : BlocBuilder<MovieBloc, MovieState>(
                       builder: (context, state) {
