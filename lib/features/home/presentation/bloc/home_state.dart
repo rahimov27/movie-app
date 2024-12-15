@@ -21,7 +21,7 @@ class SearchMoviesError extends HomeState {
 class PopularMovieLoading extends HomeState {}
 
 class PopularMovieSuccess extends HomeState {
-  final List<PopularMoviesModel> popularMovies;
+  final List<MovieModel> popularMovies;
   PopularMovieSuccess({required this.popularMovies});
 }
 

@@ -5,7 +5,7 @@ import 'package:movie_app/shared/resources/app_consts.dart';
 
 abstract class HomeRemoteDataSources {
   Future<List<SearchHomeModel>> findMovie(String title);
-  Future<List<PopularMoviesModel>> popularMovies();
+  Future<List<MovieModel>> popularMovies();
 }
 
 class HomeRemoteDataSourcesImpl implements HomeRemoteDataSources {
@@ -31,7 +31,7 @@ class HomeRemoteDataSourcesImpl implements HomeRemoteDataSources {
   }
 
   @override
-  Future<List<PopularMoviesModel>> popularMovies() async {
+  Future<List<MovieModel>> popularMovies() async {
     try {
       final response = await dio.get(
           "https://api.themoviedb.org/3/movie/popular?api_key=${AppConsts.tmdbApi}",
@@ -40,7 +40,7 @@ class HomeRemoteDataSourcesImpl implements HomeRemoteDataSources {
       if (response.statusCode == 200) {
         final List popularMovies = response.data['results'];
         return popularMovies
-            .map((popualar) => PopularMoviesModel.fromJson(popualar))
+            .map((popualar) => MovieModel.fromJson(popualar))
             .toList();
       } else {
         throw Exception("Failed to catch popular movies");
