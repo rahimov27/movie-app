@@ -18,7 +18,7 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<PopularMoviesModel>> popularMovies() async {
+  Future<List<MovieModel>> popularMovies() async {
     try {
       final result = await remoteDataSources.popularMovies();
       return result;

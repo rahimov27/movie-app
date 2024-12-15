@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/home/presentation/widgets/coming_soon_card_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/features/home/presentation/pages/home_page.dart';
 import 'package:movie_app/features/home/presentation/widgets/subtitle_coming_soon_widget.dart';
+import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
+import 'package:movie_app/shared/resources/app_consts.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 @RoutePage()
@@ -14,7 +17,14 @@ class MovieScreen extends StatefulWidget {
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  int _initialValue = 0;
+  int _initialValue = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MovieBloc>().add(GetComingSoonEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,24 +92,53 @@ class _MovieScreenState extends State<MovieScreen> {
                         movieVote: "345",
                       ),
                     )
-                  : GridView.builder(
-                      itemCount: 6,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 24,
-                        childAspectRatio: 0.43,
-                      ),
-                      itemBuilder: (context, index) =>
-                          const MovieNowPlayingCardWidget(
-                        movieImage:
-                            "https://m.media-amazon.com/images/I/81Fd1jD8DAL._AC_UF894,1000_QL80_.jpg",
-                        movieTitle: "Spider man",
-                        movieDate: "22.01.2019",
-                        movieVote: "345",
-                      ),
+                  : BlocBuilder<MovieBloc, MovieState>(
+                      builder: (context, state) {
+                        if (state is GetComingSoonLoading) {
+                          return const AppCircularWidget();
+                        } else if (state is GetComingSoonSuccess) {
+                          return GridView.builder(
+                            itemCount: state.movieModel.length,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 24,
+                              childAspectRatio: 0.43,
+                            ),
+                            itemBuilder: (context, index) =>
+                                MovieNowPlayingCardWidget(
+                              movieImage:
+                                  "${AppConsts.tmdbImagePath}${state.movieModel[index].backDropPath}",
+                              movieTitle: state.movieModel[index].title,
+                              movieDate: state.movieModel[index].releaseDate,
+                              movieType:
+                                  state.movieModel[index].originalLanguage,
+                              movieVote: state.movieModel[index].voteCount,
+                            ),
+                          );
+                        }
+                        return GridView.builder(
+                          itemCount: 6,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 24,
+                            childAspectRatio: 0.43,
+                          ),
+                          itemBuilder: (context, index) =>
+                              const MovieNowPlayingCardWidget(
+                            movieImage:
+                                "https://m.media-amazon.com/images/I/81Fd1jD8DAL._AC_UF894,1000_QL80_.jpg",
+                            movieTitle: "Spider man",
+                            movieDate: "22.01.2019",
+                            movieVote: "345",
+                          ),
+                        );
+                      },
                     ),
             )
           ],

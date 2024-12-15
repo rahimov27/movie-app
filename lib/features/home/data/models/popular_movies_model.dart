@@ -1,4 +1,4 @@
-class PopularMoviesModel {
+class MovieModel {
   final bool? adult;
   final String? backDropPath;
   final String? id;
@@ -13,7 +13,7 @@ class PopularMoviesModel {
   final String? voteAverage;
   final String? voteCount;
 
-  PopularMoviesModel(
+  MovieModel(
       this.adult,
       this.backDropPath,
       this.id,
@@ -28,8 +28,8 @@ class PopularMoviesModel {
       this.voteAverage,
       this.voteCount);
 
-  factory PopularMoviesModel.fromJson(Map<String, dynamic> json) {
-    return PopularMoviesModel(
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
       json['adult'],
       json['backdrop_path'],
       json['id']?.toString(),
