@@ -71,7 +71,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 24,
-                        childAspectRatio: 0.462,
+                        childAspectRatio: 0.43,
                       ),
                       itemBuilder: (context, index) =>
                           const MovieNowPlayingCardWidget(
@@ -90,7 +90,7 @@ class _MovieScreenState extends State<MovieScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 24,
-                        childAspectRatio: 0.462,
+                        childAspectRatio: 0.43,
                       ),
                       itemBuilder: (context, index) =>
                           const MovieNowPlayingCardWidget(
@@ -135,9 +135,9 @@ class MovieNowPlayingCardWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Image.network(
-                height: 244,
+                height: 267,
                 fit: BoxFit.cover,
-                width: 173,
+                width: double.infinity,
                 movieImage ??
                     "https://www.bik.kg/wp-content/uploads/2024/05/placeholder-2.png",
               ),
