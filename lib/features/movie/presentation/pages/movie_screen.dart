@@ -99,7 +99,8 @@ class _MovieScreenState extends State<MovieScreen> {
                               movieDate: state.movieModel[index].releaseDate,
                               movieType:
                                   state.movieModel[index].originalLanguage,
-                              movieVote: state.movieModel[index].voteCount,
+                              movieVote:
+                                  "${state.movieModel[index].voteCount} (${double.tryParse(state.movieModel[index].popularity.toString())?.toStringAsFixed(0)})",
                             ),
                           );
                         }
@@ -147,7 +148,8 @@ class _MovieScreenState extends State<MovieScreen> {
                               movieDate: state.movieModel[index].releaseDate,
                               movieType:
                                   state.movieModel[index].originalLanguage,
-                              movieVote: state.movieModel[index].voteCount,
+                              movieVote:
+                                  "${state.movieModel[index].voteCount} (${double.tryParse(state.movieModel[index].popularity.toString())?.toStringAsFixed(0)})",
                             ),
                           );
                         }
