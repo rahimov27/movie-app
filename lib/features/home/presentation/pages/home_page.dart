@@ -14,7 +14,7 @@ import 'package:movie_app/features/home/presentation/widgets/search_text_field_w
 import 'package:movie_app/features/home/presentation/widgets/see_all_button_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/service_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/title_widget.dart';
-import 'package:movie_app/shared/app_consts.dart';
+import 'package:movie_app/shared/resources/app_consts.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 @RoutePage()
