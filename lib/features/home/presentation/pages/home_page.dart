@@ -14,6 +14,7 @@ import 'package:movie_app/features/home/presentation/widgets/search_text_field_w
 import 'package:movie_app/features/home/presentation/widgets/see_all_button_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/service_widget.dart';
 import 'package:movie_app/features/home/presentation/widgets/title_widget.dart';
+import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/shared/resources/app_consts.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<HomeBloc>().add(GetPopularMovieEvent());
+    context.read<MovieBloc>().add(GetNowPlayingEvent());
   }
 
   @override
@@ -203,39 +205,34 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 32),
                   const SeeAllButtonWidget(
-                    leftText: "Now playing",
+                    leftText: "Now playings",
                     buttonText: "See all",
                   ),
                   const SizedBox(height: 24),
-                  CarouselSlider(
-                    items: const [
-                      PosterWidget(
-                        imageUrl:
-                            "https://w0.peakpx.com/wallpaper/144/660/HD-wallpaper-official-spider-man-no-way-home-poster.jpg",
-                        title: "Spider-man No way to home",
-                        year: "2024",
-                        type: "Movie",
-                      ),
-                      PosterWidget(
-                        title: "Avengers",
-                        type: "Movie",
-                        year: "2018",
-                        imageUrl:
-                            "https://image.tmdb.org/t/p/original/qMxAmzGQO722q0UlssCOPhrXmvX.jpg",
-                      ),
-                      PosterWidget(
-                        title: "Venom",
-                        type: "Movie",
-                        year: "2021",
-                        imageUrl:
-                            "https://w0.peakpx.com/wallpaper/789/852/HD-wallpaper-venom-tom-hardy-marvel-comics-transformation-movie-poster.jpg",
-                      ),
-                    ],
-                    options: CarouselOptions(
-                      height: 600,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 0.2,
-                    ),
+                  BlocBuilder<MovieBloc, MovieState>(
+                    builder: (context, state) {
+                      if (state is GetNowPlayingLoading) {
+                        return const AppCircularWidget();
+                      } else if (state is GetNowPlayingSuccess) {
+                        return CarouselSlider(
+                          items: state.movieModel.map((movie) {
+                            return PosterWidget(
+                              imageUrl:
+                                  "${AppConsts.tmdbImagePath}${movie.backDropPath}",
+                              title: movie.title,
+                              type: movie.id,
+                              year: movie.releaseDate,
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                            height: 600,
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.2,
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
                   ),
                   const SizedBox(height: 32),
                   const SeeAllButtonWidget(
