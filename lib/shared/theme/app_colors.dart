@@ -11,7 +11,8 @@ abstract class AppColors {
   static const Color slidingBackColor = Color(0xff1C1C1C);
   static const Color slidingWhiteColor = Color(0xffBFBFBF);
   static const Color black = Color(0xff000000);
-
-
+  static const Color userTextColor = Color(0xffDEDEDE);
+  static const Color dividerColor = Color(0xff4A4A4A);
+  static const Color switchColor = Color(0xff2E2E2E);
 
 }
