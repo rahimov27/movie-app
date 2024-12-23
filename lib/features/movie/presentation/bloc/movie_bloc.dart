@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_app/features/home/data/models/popular_movies_model.dart';
+import 'package:movie_app/features/movie/data/models/movie_actors_model.dart';
 import 'package:movie_app/features/movie/domain/repositories/movie_repository.dart';
 
 part 'movie_event.dart';
@@ -29,5 +30,16 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         emit(GetNowPlayingError(error: "$e"));
       }
     });
+
+    on<GetActorsEvent>(
+      (event, emit) async {
+        try {
+          final actors = await repository.getActors(event.movieId);
+          emit(GetActorsSuccess(actors: actors));
+        } catch (e) {
+          emit(GetActorsError(error: "$e"));
+        }
+      },
+    );
   }
 }

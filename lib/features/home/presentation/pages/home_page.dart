@@ -262,6 +262,8 @@ class _HomePageState extends State<HomePage> {
                                     onTap: () {
                                       context.router.push(
                                         MovieDetailRoute(
+                                            movieId:
+                                                popularMovies[index].id ?? "",
                                             overview:
                                                 popularMovies[index].overview,
                                             adult: popularMovies[index].adult,
