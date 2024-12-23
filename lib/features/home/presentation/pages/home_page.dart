@@ -16,6 +16,7 @@ import 'package:movie_app/features/home/presentation/widgets/service_widget.dart
 import 'package:movie_app/features/home/presentation/widgets/title_widget.dart';
 import 'package:movie_app/features/movie/presentation/bloc/movie_bloc.dart';
 import 'package:movie_app/shared/resources/app_consts.dart';
+import 'package:movie_app/shared/router/router.gr.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 @RoutePage()
@@ -257,12 +258,36 @@ class _HomePageState extends State<HomePage> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: popularMovies.length,
                                   itemBuilder: (context, index) =>
-                                      PopularMovieCardWidget(
-                                    movieTitle: popularMovies[index].title,
-                                    movieDate: popularMovies[index].releaseDate,
-                                    movieType: popularMovies[index].overview,
-                                    movieImage:
-                                        "${AppConsts.tmdbImagePath}${popularMovies[index].backDropPath}",
+                                      GestureDetector(
+                                    onTap: () {
+                                      context.router.push(
+                                        MovieDetailRoute(
+                                            overview:
+                                                popularMovies[index].overview,
+                                            adult: popularMovies[index].adult,
+                                            originalLanguage:
+                                                popularMovies[index]
+                                                    .originalLanguage,
+                                            voteCount:
+                                                popularMovies[index].voteCount,
+                                            voteAverage: popularMovies[index]
+                                                .voteAverage,
+                                            movieDate:
+                                                "${popularMovies[index].releaseDate} ${popularMovies[index].originalLanguage}",
+                                            movieImage:
+                                                "${AppConsts.tmdbImagePath}${popularMovies[index].backDropPath}",
+                                            movieTitle:
+                                                popularMovies[index].title),
+                                      );
+                                    },
+                                    child: PopularMovieCardWidget(
+                                      movieTitle: popularMovies[index].title,
+                                      movieDate:
+                                          popularMovies[index].releaseDate,
+                                      movieType: popularMovies[index].overview,
+                                      movieImage:
+                                          "${AppConsts.tmdbImagePath}${popularMovies[index].backDropPath}",
+                                    ),
                                   ),
                                 ),
                               );

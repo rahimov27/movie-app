@@ -9,14 +9,14 @@ import 'package:movie_app/shared/resources/app_consts.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
 @RoutePage()
-class MovieScreen extends StatefulWidget {
-  const MovieScreen({super.key});
+class MoviePage extends StatefulWidget {
+  const MoviePage({super.key});
 
   @override
-  State<MovieScreen> createState() => _MovieScreenState();
+  State<MoviePage> createState() => _MoviePageState();
 }
 
-class _MovieScreenState extends State<MovieScreen> {
+class _MoviePageState extends State<MoviePage> {
   int _initialValue = 0;
 
   @override
