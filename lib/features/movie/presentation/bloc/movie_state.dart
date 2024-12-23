@@ -16,8 +16,6 @@ class GetComingSoonSuccess extends MovieState {
   GetComingSoonSuccess({required this.movieModel});
 }
 
-
-
 class GetNowPlayingLoading extends MovieState {}
 
 class GetNowPlayingError extends MovieState {
@@ -28,4 +26,16 @@ class GetNowPlayingError extends MovieState {
 class GetNowPlayingSuccess extends MovieState {
   final List<MovieModel> movieModel;
   GetNowPlayingSuccess({required this.movieModel});
+}
+
+class GetActorsLoading extends MovieState {}
+
+class GetActorsSuccess extends MovieState {
+  final List<MovieActorsModel> actors;
+  GetActorsSuccess({required this.actors});
+}
+
+class GetActorsError extends MovieState {
+  final String error;
+  GetActorsError({required this.error});
 }

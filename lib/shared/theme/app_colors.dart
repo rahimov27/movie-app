@@ -15,4 +15,5 @@ abstract class AppColors {
   static const Color dividerColor = Color(0xff4A4A4A);
   static const Color switchColor = Color(0xff2E2E2E);
   static const Color greyDetail = Color(0xffCDCDCD);
+  static const Color movieDetailActorsColor = Color(0xffF2F2F2);
 }

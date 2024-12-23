@@ -66,6 +66,7 @@ class MainRoute extends _i8.PageRouteInfo<void> {
 class MovieDetailRoute extends _i8.PageRouteInfo<MovieDetailRouteArgs> {
   MovieDetailRoute({
     _i9.Key? key,
+    required String movieId,
     String? movieTitle,
     String? movieImage,
     String? movieDate,
@@ -79,6 +80,7 @@ class MovieDetailRoute extends _i8.PageRouteInfo<MovieDetailRouteArgs> {
           MovieDetailRoute.name,
           args: MovieDetailRouteArgs(
             key: key,
+            movieId: movieId,
             movieTitle: movieTitle,
             movieImage: movieImage,
             movieDate: movieDate,
@@ -96,10 +98,10 @@ class MovieDetailRoute extends _i8.PageRouteInfo<MovieDetailRouteArgs> {
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<MovieDetailRouteArgs>(
-          orElse: () => const MovieDetailRouteArgs());
+      final args = data.argsAs<MovieDetailRouteArgs>();
       return _i3.MovieDetailPage(
         key: args.key,
+        movieId: args.movieId,
         movieTitle: args.movieTitle,
         movieImage: args.movieImage,
         movieDate: args.movieDate,
@@ -116,6 +118,7 @@ class MovieDetailRoute extends _i8.PageRouteInfo<MovieDetailRouteArgs> {
 class MovieDetailRouteArgs {
   const MovieDetailRouteArgs({
     this.key,
+    required this.movieId,
     this.movieTitle,
     this.movieImage,
     this.movieDate,
@@ -127,6 +130,8 @@ class MovieDetailRouteArgs {
   });
 
   final _i9.Key? key;
+
+  final String movieId;
 
   final String? movieTitle;
 
@@ -146,7 +151,7 @@ class MovieDetailRouteArgs {
 
   @override
   String toString() {
-    return 'MovieDetailRouteArgs{key: $key, movieTitle: $movieTitle, movieImage: $movieImage, movieDate: $movieDate, voteCount: $voteCount, adult: $adult, overview: $overview, voteAverage: $voteAverage, originalLanguage: $originalLanguage}';
+    return 'MovieDetailRouteArgs{key: $key, movieId: $movieId, movieTitle: $movieTitle, movieImage: $movieImage, movieDate: $movieDate, voteCount: $voteCount, adult: $adult, overview: $overview, voteAverage: $voteAverage, originalLanguage: $originalLanguage}';
   }
 }
 
