@@ -3,14 +3,15 @@ import 'package:movie_app/shared/theme/app_colors.dart';
 
 class YellowButtonWidget extends StatelessWidget {
   final String? text;
-  const YellowButtonWidget({super.key, this.text});
+  final VoidCallback? onTap;
+  const YellowButtonWidget({super.key, this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(AppColors.yellow),
           shape: WidgetStateProperty.all(

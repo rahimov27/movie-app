@@ -1,10 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/features/auth/presentation/widgets/m_logo_widget.dart';
 import 'package:movie_app/features/auth/presentation/widgets/social_button_widget.dart';
 import 'package:movie_app/features/auth/presentation/widgets/splash_image_widget.dart';
 import 'package:movie_app/features/auth/presentation/widgets/yellow_button_widget.dart';
+import 'package:movie_app/shared/router/router.gr.dart';
 import 'package:movie_app/shared/theme/app_colors.dart';
 
+@RoutePage()
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
@@ -15,34 +18,37 @@ class SignInPage extends StatelessWidget {
         children: [
           const SplashImageWidget(),
           Container(color: AppColors.splashBlackColor.withOpacity(0.60)),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                MLogoWidget(),
-                SizedBox(height: 100),
-                WelcomeTextWidget(text: "Welcome Back"),
-                SizedBox(height: 24),
-                SocialButtonWidget(
+                const MLogoWidget(),
+                const SizedBox(height: 100),
+                const WelcomeTextWidget(text: "Welcome Back"),
+                const SizedBox(height: 24),
+                const SocialButtonWidget(
                     text: "Continue with Facebook",
                     image: "assets/images/png/Facebook-logo.png"),
-                SizedBox(height: 12),
-                SocialButtonWidget(
+                const SizedBox(height: 12),
+                const SocialButtonWidget(
                     text: "Continue with Google",
                     image: "assets/images/png/Google-logo.png"),
-                SizedBox(height: 12),
-                SocialButtonWidget(
+                const SizedBox(height: 12),
+                const SocialButtonWidget(
                     text: "Continue with Apple",
                     image: "assets/images/png/Apple-logo.png"),
-                SizedBox(height: 12),
-                SizedBox(height: 24),
-                Divider(),
-                SizedBox(height: 24),
-                YellowButtonWidget(text: 'Log in with password'),
-                SizedBox(height: 24),
-                Row(
+                const SizedBox(height: 12),
+                const SizedBox(height: 24),
+                const Divider(),
+                const SizedBox(height: 24),
+                YellowButtonWidget(
+                  text: 'Log in with password',
+                  onTap: () => context.router.replace(const HomeRoute()),
+                ),
+                const SizedBox(height: 24),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -61,7 +67,7 @@ class SignInPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 40)
+                const SizedBox(height: 40)
               ],
             ),
           )
